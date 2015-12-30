@@ -3,6 +3,10 @@
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovementController : MonoBehaviour {
 
+    const string HORIZONTAL_AXIS = "LX";
+    const string VERTICAL_AXIS = "LY";
+
+    public Player player = Player.P1;
     public float speed = 10f;
 
     Rigidbody _rigidbody;
@@ -13,9 +17,9 @@ public class PlayerMovementController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void LateUpdate () {
-        var movementInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+	void FixedUpdate () {
+        var movementInput = new Vector3(Input.GetAxis(player.ToString() + HORIZONTAL_AXIS), 0f, Input.GetAxis(player.ToString() + VERTICAL_AXIS));
 
-        _rigidbody.AddForce(movementInput * speed, ForceMode.Force);
+        _rigidbody.MovePosition(_rigidbody.position + movementInput * speed * Time.deltaTime);
 	}
 }
